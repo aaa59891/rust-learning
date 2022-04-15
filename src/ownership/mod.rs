@@ -58,3 +58,34 @@ pub fn clone_example() {
     println!("x's address: {:p}, x: {}", &x, x);
     println!("y's address: {:p}, y: {}", &y, y);
 }
+
+pub fn test_string_literal() {
+    let mut x = "test";
+    let y = x;
+    println!("x's address: {:p}, x: {}", &x, x);
+    println!("y's address: {:p}, y: {}", &y, y);
+
+    x = "new str";
+    println!("after mutated");
+    println!("x's address: {:p}, x: {}", &x, x);
+    println!("y's address: {:p}, y: {}", &y, y);
+
+    // conclusion: string literal should be also stored in stack since it's known size during compile time
+    // it shouldn't be like String type that store the content in heap, otherwise first part would have compile error
+    // second part also proves that when we mutate x, y isn't mutated
+}
+
+pub fn test_ownership() {
+    let x = String::from("test");
+    println!("x's address: {:p}", &x);
+    take_ownership(x);
+    /*
+    after first function call, the ownership move to the function, and when the function is execute, the ownership got cleared
+    hence, if we want to use the x in other function, we would get compile error
+    */
+    // take_ownership(x);
+}
+
+fn take_ownership(str: String) {
+    println!("str's address inside take_ownership: {:p}", &str);
+}
