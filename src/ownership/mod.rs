@@ -84,8 +84,25 @@ pub fn test_ownership() {
     hence, if we want to use the x in other function, we would get compile error
     */
     // take_ownership(x);
+
+    let x2 = String::from("x2");
+
+    println!("x2's address: {:p}, x2: {}", &x2, &x2);
+    take_reference(&x2);
+    take_reference(&x2);
+    /*
+    with reference, we can still use x2 after executing take_reference,
+    notice that x2's address is different from str_ptr's address inside take_reference
+    the reference create another address to point to x2, so when take_reference finished, rust only clear the `reference` without affecting x2
+    if x2 and str_ptr inside take_reference have the same address, it might cause lifetime issue :think?
+    */
 }
 
 fn take_ownership(str: String) {
     println!("str's address inside take_ownership: {:p}", &str);
+}
+
+// rust call this `borrowing`
+fn take_reference(str_ptr: &String) {
+    println!("str_ptr's address: {:p}, str_ptr: {}", &str_ptr, str_ptr);
 }
