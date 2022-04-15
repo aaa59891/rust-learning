@@ -31,3 +31,20 @@ pub fn copy_primitive_type() {
     // means, y's pointer doesn't point to x's address, it points to the value 5 directly
     println!("&x: {:p}, &y: {:p}", &x, &y);
 }
+
+pub fn copy_non_primitive_type() {
+    // two different addresses but point to the same heap memory
+    let x = String::from("test");
+    println!("x's address: {:p}, x: {}", &x, x);
+    let y = x;
+    println!("y's address: {:p}, y: {}", &y, y);
+
+    /*
+    compile error because of rule: There can only be one owner at a time.
+    let x = String::from("test");: x -> "test"
+    let y = x;: x move to y, rust treat x as invalidate, y -> "test"
+    similar as shallow copy, only copy a new address but points to the same heap memory
+    but because rust invalidates the original variable, it's usually called `move`, x was moved into y
+    */
+    // println!("x: {}, y: {}", x, y);
+}

@@ -3,5 +3,5 @@ mod ownership;
 fn main() {
     // guess_game::guess_game();
     // ownership::different_str();
-    ownership::copy_primitive_type();
+    ownership::copy_non_primitive_type();
 }
