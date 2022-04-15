@@ -19,3 +19,15 @@ pub fn different_str() {
     str.push_str("new");
     println!("str: {}", str);
 }
+
+pub fn copy_primitive_type() {
+    let x = 5;
+    let y = x;
+    // although x and y's value is the same 5
+    println!("x: {}, y: {}", x, y);
+
+    // in stack, there are two values
+    // because this is the primitive type, the address stores the content(5) directly
+    // means, y's pointer doesn't point to x's address, it points to the value 5 directly
+    println!("&x: {:p}, &y: {:p}", &x, &y);
+}
