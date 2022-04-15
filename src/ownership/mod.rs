@@ -48,3 +48,13 @@ pub fn copy_non_primitive_type() {
     */
     // println!("x: {}, y: {}", x, y);
 }
+
+pub fn clone_example() {
+    // if want to do deep copy, can use clone method
+    let x = String::from("test");
+    let y = x.clone();
+
+    // notice here, there is no compile error when we print x after x.clone()
+    println!("x's address: {:p}, x: {}", &x, x);
+    println!("y's address: {:p}, y: {}", &y, y);
+}
