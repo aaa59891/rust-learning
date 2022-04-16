@@ -96,6 +96,24 @@ pub fn test_ownership() {
     the reference create another address to point to x2, so when take_reference finished, rust only clear the `reference` without affecting x2
     if x2 and str_ptr inside take_reference have the same address, it might cause lifetime issue :think?
     */
+
+    let mut mutable_str = String::from("mutable str");
+    println!("before take_mutable_reference: {}", mutable_str);
+    take_mutable_reference(&mut mutable_str);
+    println!("after take_mutable_reference: {}", mutable_str);
+
+    /*
+    can have only one mutable reference to a particular piece of data at a time
+    The benefit of having this restriction is that Rust can prevent data races at compile time,
+    the data races happens when:
+        - Two or more pointers access the same data at the same time.
+        - At least one of the pointers is being used to write to the data.
+        - There’s no mechanism being used to synchronize access to the data.
+    compile error code:
+    */
+    // let m1 = &mut mutable_str;
+    // let m2 = &mut mutable_str;
+    // println!("{}, {}", m1, m2);
 }
 
 fn take_ownership(str: String) {
@@ -105,4 +123,10 @@ fn take_ownership(str: String) {
 // rust call this `borrowing`
 fn take_reference(str_ptr: &String) {
     println!("str_ptr's address: {:p}, str_ptr: {}", &str_ptr, str_ptr);
+}
+
+// the default reference is immutable, need to explicitly specify the `mut` to make it mutable
+fn take_mutable_reference(str_ptr: &mut String) {
+    str_ptr.push_str(" after take_mutable_reference");
+    println!("inside take_mutable_reference: {}", str_ptr);
 }
